@@ -91,41 +91,48 @@ const FeatureCard = ({
   title: string;
   description: string;
 }) => (
-  <div className="bg-white/5 backdrop-blur-md p-8 rounded-lg shadow-2xl transform hover:-translate-y-2 transition-transform duration-300 border border-white/10 h-full">
-    {' '}
-    <div className="text-orange-500 mb-4">{icon}</div>{' '}
-    <h3 className="text-2xl font-bold mb-3 text-white">{title}</h3>{' '}
-    <p className="text-gray-300 text-lg leading-relaxed">{description}</p>{' '}
+  <div
+    className="bg-white/5 backdrop-blur-md p-8 rounded-lg shadow-2xl border border-white/10 h-full 
+                 transition-all duration-300 ease-in-out 
+                 hover:scale-105 hover:shadow-orange-500/30 hover:bg-white/10"
+  >
+    <div className="text-orange-500 mb-4">{icon}</div>
+    <h3 className="text-2xl font-bold mb-3 text-white">{title}</h3>
+    <p className="text-gray-300 text-lg leading-relaxed">{description}</p>
   </div>
 );
 const TechCard = ({ icon, name }: { icon: React.ReactNode; name: string }) => (
-  <div className="flex items-center gap-4 bg-white/5 backdrop-blur-md p-4 rounded-lg shadow-lg border border-white/10 transform hover:scale-105 transition-transform duration-300">
-    {' '}
-    <div className="w-10 h-10 text-orange-400">{icon}</div>{' '}
-    <span className="text-xl font-semibold text-white">{name}</span>{' '}
+  <div
+    className="flex items-center gap-4 bg-white/5 backdrop-blur-md p-4 rounded-lg shadow-lg border border-white/10 
+                 transition-all duration-300 ease-in-out 
+                 hover:scale-110 hover:shadow-orange-500/30 hover:bg-white/10"
+  >
+    <div className="w-10 h-10 text-orange-400">{icon}</div>
+    <span className="text-xl font-semibold text-white">{name}</span>
   </div>
 );
 const LocationCard = ({ name, description, image, isLoading }: Location) => (
-  <div className="bg-black/30 rounded-lg shadow-2xl overflow-hidden group">
-    {' '}
-    <div className="w-full h-56 bg-gray-800/50 flex items-center justify-center">
-      {' '}
+  <div
+    className="bg-black/30 rounded-lg shadow-2xl overflow-hidden group 
+                 transition-all duration-300 ease-in-out 
+                 hover:shadow-orange-500/40 hover:-translate-y-2 hover:scale-105"
+  >
+    <div className="w-full h-56 bg-gray-800/50 flex items-center justify-center overflow-hidden">
       {isLoading && (
         <div className="w-12 h-12 border-4 border-dashed rounded-full animate-spin border-orange-500"></div>
-      )}{' '}
+      )}
       {image && (
         <img
           src={image}
           alt={name}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
         />
-      )}{' '}
-    </div>{' '}
+      )}
+    </div>
     <div className="p-6">
-      {' '}
-      <h3 className="text-2xl font-bold text-white mb-2">{name}</h3>{' '}
-      <p className="text-gray-300">{description}</p>{' '}
-    </div>{' '}
+      <h3 className="text-2xl font-bold text-white mb-2">{name}</h3>
+      <p className="text-gray-300">{description}</p>
+    </div>
   </div>
 );
 
@@ -141,6 +148,8 @@ export default function Home() {
   const [isConnectModalOpen, setConnectModalOpen] = useState(false);
   const [locations, setLocations] = useState<Location[]>(initialLocations);
   const [isExploring, setIsExploring] = useState(false);
+
+  // This is the clean and correct fix for the build error.
   const [language, setLanguage] = useState<keyof Translations>('en');
   const t = translations[language];
 
@@ -350,39 +359,42 @@ export default function Home() {
         <div className="min-h-screen flex flex-col items-center justify-center text-center w-full pt-32 pb-12 px-4">
           {showInitialView && (
             <div className="animate-fade-in flex flex-col items-center">
+              {' '}
               <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-7xl md:text-8xl">
                 Kash<span className="text-orange-500">Mirage</span>
-              </h1>
+              </h1>{' '}
               <p className="mt-6 max-w-3xl mx-auto text-lg text-gray-300 sm:text-2xl">
                 {t.tagline}
-              </p>
+              </p>{' '}
               <div className="mt-12 flex flex-col sm:flex-row gap-6">
+                {' '}
                 <button
                   onClick={handleStartCapture}
                   className="px-8 py-4 bg-orange-600 text-white font-bold rounded-full text-xl hover:bg-orange-700 shadow-lg flex items-center gap-3"
                 >
                   <Camera size={30} />
                   <span>Use Camera</span>
-                </button>
+                </button>{' '}
                 <button
                   onClick={() => fileInputRef.current?.click()}
                   className="px-8 py-4 bg-gray-600 text-white font-bold rounded-full text-xl hover:bg-gray-700 shadow-lg flex items-center gap-3"
                 >
                   <Upload size={30} />
                   <span>Upload Image</span>
-                </button>
-              </div>
+                </button>{' '}
+              </div>{' '}
             </div>
           )}
           {showCameraView && (
             <div className="w-full max-w-4xl animate-fade-in">
+              {' '}
               <video
                 ref={videoRef}
                 autoPlay
                 playsInline
                 muted
                 className="w-full rounded-lg shadow-2xl border-4 border-white/20"
-              />
+              />{' '}
               <div className="mt-8">
                 <button
                   onClick={handleTakePhoto}
@@ -390,59 +402,63 @@ export default function Home() {
                 >
                   Take Photo
                 </button>
-              </div>
+              </div>{' '}
             </div>
           )}
           {showCapturedView && (
             <div className="w-full max-w-4xl animate-fade-in">
+              {' '}
               <h2 className="text-3xl font-bold text-white mb-4">
                 Confirm Your Image
-              </h2>
+              </h2>{' '}
               <img
                 src={capturedImage!}
                 alt="Captured"
                 className="w-full rounded-lg shadow-2xl border-4 border-white/20"
-              />
+              />{' '}
               <div className="mt-8 flex justify-center gap-6">
+                {' '}
                 <button
                   onClick={handleReset}
                   className="px-8 py-4 bg-gray-600 text-white font-bold rounded-full text-lg hover:bg-gray-700"
                 >
                   Retake
-                </button>
+                </button>{' '}
                 <button
                   onClick={handleAnalyzePhoto}
                   className="px-8 py-4 bg-green-600 text-white font-bold rounded-full text-lg hover:bg-green-700"
                 >
                   Continue with this image
-                </button>
-              </div>
+                </button>{' '}
+              </div>{' '}
             </div>
           )}
           {showLoadingView && <LoadingSpinner />}
           {showResultView && (
             <div className="flex flex-col items-center gap-8 animate-fade-in">
-              <ResultCard result={analysisResult} />
+              {' '}
+              <ResultCard result={analysisResult} />{' '}
               <button
                 onClick={handleReset}
                 className="px-8 py-4 bg-orange-600 text-white font-bold rounded-full text-lg hover:bg-orange-700"
               >
                 Scan Another
-              </button>
+              </button>{' '}
             </div>
           )}
           {showErrorView && (
             <div className="flex flex-col items-center gap-4 animate-fade-in p-8 bg-red-900/50 rounded-lg border border-red-500/50">
+              {' '}
               <h2 className="text-2xl font-bold text-red-400">
                 Analysis Failed
-              </h2>
-              <p className="text-red-300">{error}</p>
+              </h2>{' '}
+              <p className="text-red-300">{error}</p>{' '}
               <button
                 onClick={handleReset}
                 className="mt-4 px-8 py-4 bg-orange-600 text-white font-bold rounded-full text-lg hover:bg-orange-700"
               >
                 Try Again
-              </button>
+              </button>{' '}
             </div>
           )}
           <input
@@ -468,12 +484,11 @@ export default function Home() {
                 <LocationCard key={location.name} {...location} />
               ))}
             </div>
-            {/* RESTORED: The "Explore More" button */}
             <div className="mt-16">
               <button
                 onClick={handleExploreMore}
                 disabled={isExploring}
-                className="px-8 py-4 bg-orange-600 text-white font-bold rounded-full text-lg hover:bg-orange-700 transition-all duration-300 transform hover:scale-105 disabled:bg-gray-500 disabled:scale-100 flex items-center gap-3 mx-auto"
+                className="px-8 py-4 bg-orange-600 text-white font-bold rounded-full text-lg hover:bg-orange-700 disabled:bg-gray-500 flex items-center gap-3 mx-auto"
               >
                 {isExploring ? (
                   <>
@@ -556,31 +571,52 @@ export default function Home() {
             name="access_key"
             value={process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY}
           />
-          <div className="flex flex-col gap-4 text-lg">
-            <input
-              type="text"
-              name="name"
-              placeholder="Your Name"
-              required
-              className="bg-white/10 p-3 rounded-lg border border-white/20 focus:outline-none focus:ring-2 focus:ring-orange-500 text-white"
-            />
-            <input
-              type="email"
-              name="email"
-              placeholder="Your Email"
-              required
-              className="bg-white/10 p-3 rounded-lg border border-white/20 focus:outline-none focus:ring-2 focus:ring-orange-500 text-white"
-            />
-            <textarea
-              name="message"
-              placeholder="Your Message"
-              required
-              rows={4}
-              className="bg-white/10 p-3 rounded-lg border border-white/20 focus:outline-none focus:ring-2 focus:ring-orange-500 text-white"
-            ></textarea>
+          <div className="flex flex-col gap-6 text-lg">
+            {/* Each input field is wrapped in a div for the gradient border effect */}
+            <div className="relative group">
+              <div className="absolute -inset-0.5 bg-gradient-to-r from-orange-600 to-amber-500 rounded-lg blur opacity-0 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
+              <input
+                type="text"
+                name="name"
+                placeholder="Your Name"
+                required
+                className="relative w-full bg-gray-900 p-3 rounded-lg border border-white/20 
+                   text-white placeholder-gray-400
+                   focus:outline-none focus:ring-2 focus:ring-orange-500"
+              />
+            </div>
+
+            <div className="relative group">
+              <div className="absolute -inset-0.5 bg-gradient-to-r from-orange-600 to-amber-500 rounded-lg blur opacity-0 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
+              <input
+                type="email"
+                name="email"
+                placeholder="Your Email"
+                required
+                className="relative w-full bg-gray-900 p-3 rounded-lg border border-white/20 
+                   text-white placeholder-gray-400
+                   focus:outline-none focus:ring-2 focus:ring-orange-500"
+              />
+            </div>
+
+            <div className="relative group">
+              <div className="absolute -inset-0.5 bg-gradient-to-r from-orange-600 to-amber-500 rounded-lg blur opacity-0 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
+              <textarea
+                name="message"
+                placeholder="Your Message"
+                required
+                rows={4}
+                className="relative w-full bg-gray-900 p-3 rounded-lg border border-white/20 
+                   text-white placeholder-gray-400
+                   focus:outline-none focus:ring-2 focus:ring-orange-500"
+              ></textarea>
+            </div>
+
             <button
               type="submit"
-              className="px-6 py-3 bg-orange-600 text-white font-bold rounded-full text-lg hover:bg-orange-700"
+              className="px-6 py-3 bg-gradient-to-r from-orange-500 to-amber-500 text-white font-bold rounded-full text-lg 
+                 transition-all duration-300 ease-in-out
+                 hover:scale-105 hover:shadow-lg hover:shadow-orange-500/40"
             >
               Send Message
             </button>
