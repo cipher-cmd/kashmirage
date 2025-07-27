@@ -16,7 +16,7 @@ export default function Header({
       <div className="bg-black/50 backdrop-blur-xl border-b border-white/10 shadow-lg">
         <div className="container mx-auto flex justify-between items-center p-6 text-white">
           <a href="#" className="text-4xl font-bold tracking-wider">
-            KashMir<span className="text-orange-500">age</span>
+            Kash<span className="text-orange-500">Mirage</span>
           </a>
           <nav className="hidden md:flex items-center gap-12">
             <a href="#" className="text-xl font-bold text-orange-400">

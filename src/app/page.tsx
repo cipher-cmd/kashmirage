@@ -22,20 +22,18 @@ import {
   Upload,
 } from 'lucide-react';
 
-// --- Translation Content Interfaces ---
+// --- Interfaces and Data ---
 interface TranslationContent {
   tagline: string;
   locationsTitle: string;
   featuresTitle: string;
   featuresSubtitle: string;
 }
-
 interface Translations {
   en: TranslationContent;
   hi: TranslationContent;
   ks: TranslationContent;
 }
-
 const translations: Translations = {
   en: {
     tagline: 'Scan. Discover. Learn.',
@@ -59,16 +57,12 @@ const translations: Translations = {
       'کشمیراج چھُ جدید ویب ٹیکنالوجی ہُنٛد اِستعمال کران اَکھ ہموار تہٕ معلوماتی تجربہٕ پٲداه کرنہٕ خٲطرٕ۔',
   },
 };
-
-// --- Location Data Structure ---
 interface Location {
   name: string;
   description: string;
   image?: string;
   isLoading?: boolean;
 }
-
-// --- Initial Seed Locations ---
 const initialLocations: Location[] = [
   {
     name: 'Tarsar Lake',
@@ -98,37 +92,40 @@ const FeatureCard = ({
   description: string;
 }) => (
   <div className="bg-white/5 backdrop-blur-md p-8 rounded-lg shadow-2xl transform hover:-translate-y-2 transition-transform duration-300 border border-white/10 h-full">
-    <div className="text-orange-500 mb-4">{icon}</div>
-    <h3 className="text-2xl font-bold mb-3 text-white">{title}</h3>
-    <p className="text-gray-300 text-lg leading-relaxed">{description}</p>
+    {' '}
+    <div className="text-orange-500 mb-4">{icon}</div>{' '}
+    <h3 className="text-2xl font-bold mb-3 text-white">{title}</h3>{' '}
+    <p className="text-gray-300 text-lg leading-relaxed">{description}</p>{' '}
   </div>
 );
-
 const TechCard = ({ icon, name }: { icon: React.ReactNode; name: string }) => (
   <div className="flex items-center gap-4 bg-white/5 backdrop-blur-md p-4 rounded-lg shadow-lg border border-white/10 transform hover:scale-105 transition-transform duration-300">
-    <div className="w-10 h-10 text-orange-400">{icon}</div>
-    <span className="text-xl font-semibold text-white">{name}</span>
+    {' '}
+    <div className="w-10 h-10 text-orange-400">{icon}</div>{' '}
+    <span className="text-xl font-semibold text-white">{name}</span>{' '}
   </div>
 );
-
 const LocationCard = ({ name, description, image, isLoading }: Location) => (
   <div className="bg-black/30 rounded-lg shadow-2xl overflow-hidden group">
+    {' '}
     <div className="w-full h-56 bg-gray-800/50 flex items-center justify-center">
+      {' '}
       {isLoading && (
         <div className="w-12 h-12 border-4 border-dashed rounded-full animate-spin border-orange-500"></div>
-      )}
+      )}{' '}
       {image && (
         <img
           src={image}
           alt={name}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
         />
-      )}
-    </div>
+      )}{' '}
+    </div>{' '}
     <div className="p-6">
-      <h3 className="text-2xl font-bold text-white mb-2">{name}</h3>
-      <p className="text-gray-300">{description}</p>
-    </div>
+      {' '}
+      <h3 className="text-2xl font-bold text-white mb-2">{name}</h3>{' '}
+      <p className="text-gray-300">{description}</p>{' '}
+    </div>{' '}
   </div>
 );
 
@@ -145,8 +142,7 @@ export default function Home() {
   const [locations, setLocations] = useState<Location[]>(initialLocations);
   const [isExploring, setIsExploring] = useState(false);
   const [language, setLanguage] = useState<keyof Translations>('en');
-
-  const t = translations[language as keyof Translations];
+  const t = translations[language];
 
   // --- Refs ---
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -160,7 +156,6 @@ export default function Home() {
         (loc) => !loc.image && !loc.isLoading
       );
       if (locationsToUpdate.length === 0) return;
-
       setLocations((prev) =>
         prev.map((loc) =>
           locationsToUpdate.some((ltu) => ltu.name === loc.name)
@@ -168,7 +163,6 @@ export default function Home() {
             : loc
         )
       );
-
       for (const location of locationsToUpdate) {
         try {
           const response = await fetch('/api/generate-image', {
@@ -179,7 +173,6 @@ export default function Home() {
           if (!response.ok)
             throw new Error('Image generation failed for ' + location.name);
           const data = await response.json();
-
           setLocations((prev) =>
             prev.map((loc) =>
               loc.name === location.name
@@ -219,7 +212,6 @@ export default function Home() {
       });
       if (!response.ok) throw new Error('Failed to get suggestions');
       const { suggestedLocation } = await response.json();
-
       if (
         suggestedLocation &&
         !locations.find((l) => l.name === suggestedLocation.name)
@@ -229,8 +221,8 @@ export default function Home() {
           { ...suggestedLocation, isLoading: false, image: undefined },
         ]);
       }
-    } catch (error) {
-      console.error('Failed to explore more locations', error);
+    } catch (err) {
+      console.error('Failed to explore more locations', err);
     } finally {
       setIsExploring(false);
     }
@@ -246,8 +238,8 @@ export default function Home() {
       });
       setStream(streamData);
       if (videoRef.current) videoRef.current.srcObject = streamData;
-    } catch (error) {
-      console.error('Error accessing camera:', error);
+    } catch (err) {
+      console.error('Error accessing camera:', err);
       setError(
         'Could not access the camera. Please check your browser permissions.'
       );
@@ -298,8 +290,7 @@ export default function Home() {
           const errorData = await response.json();
           errorMsg = errorData.error || errorMsg;
         } catch (e) {
-          errorMsg =
-            'The server returned an unexpected response. Please check the server logs.';
+          errorMsg = 'The server returned an unexpected response.';
         }
         throw new Error(errorMsg);
       }
@@ -309,9 +300,9 @@ export default function Home() {
         location: 'AI Generated Description',
         description: data.description,
         funFacts: [
-          'This analysis was generated by an AI.',
-          'The model describes the visual content of the image.',
-          'This feature can describe almost any image!',
+          'Analysis generated by AI.',
+          'Describes the visual content.',
+          'Can describe almost any image!',
         ],
         imageUrl: capturedImage,
       };
@@ -333,6 +324,10 @@ export default function Home() {
     setAnalysisResult(null);
     setIsLoading(false);
     setError(null);
+    if (stream) {
+      stream.getTracks().forEach((track) => track.stop());
+      setStream(null);
+    }
   };
 
   // --- UI State ---
@@ -348,13 +343,9 @@ export default function Home() {
   return (
     <div className="bg-black/60 backdrop-blur-sm flex flex-col min-h-screen text-gray-200">
       <Header
-        onConnectClick={() => {
-          console.log('Connect button was clicked!');
-          setConnectModalOpen(true);
-        }}
+        onConnectClick={() => setConnectModalOpen(true)}
         onLanguageSelect={setLanguage}
       />
-
       <main className="flex-grow">
         <div className="min-h-screen flex flex-col items-center justify-center text-center w-full pt-32 pb-12 px-4">
           {showInitialView && (
@@ -368,16 +359,14 @@ export default function Home() {
               <div className="mt-12 flex flex-col sm:flex-row gap-6">
                 <button
                   onClick={handleStartCapture}
-                  className="px-8 py-4 bg-orange-600 text-white font-bold rounded-full text-xl hover:bg-orange-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-orange-500/50 flex items-center gap-3"
-                  aria-label="Use Camera"
+                  className="px-8 py-4 bg-orange-600 text-white font-bold rounded-full text-xl hover:bg-orange-700 shadow-lg flex items-center gap-3"
                 >
                   <Camera size={30} />
                   <span>Use Camera</span>
                 </button>
                 <button
                   onClick={() => fileInputRef.current?.click()}
-                  className="px-8 py-4 bg-gray-600 text-white font-bold rounded-full text-xl hover:bg-gray-700 transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center gap-3"
-                  aria-label="Upload Image"
+                  className="px-8 py-4 bg-gray-600 text-white font-bold rounded-full text-xl hover:bg-gray-700 shadow-lg flex items-center gap-3"
                 >
                   <Upload size={30} />
                   <span>Upload Image</span>
@@ -397,7 +386,7 @@ export default function Home() {
               <div className="mt-8">
                 <button
                   onClick={handleTakePhoto}
-                  className="px-12 py-5 bg-red-600 text-white font-bold rounded-full text-2xl hover:bg-red-700 transition-all duration-300 transform hover:scale-110 shadow-lg hover:shadow-red-500/50"
+                  className="px-12 py-5 bg-red-600 text-white font-bold rounded-full text-2xl hover:bg-red-700"
                 >
                   Take Photo
                 </button>
@@ -417,13 +406,13 @@ export default function Home() {
               <div className="mt-8 flex justify-center gap-6">
                 <button
                   onClick={handleReset}
-                  className="px-8 py-4 bg-gray-600 text-white font-bold rounded-full text-lg hover:bg-gray-700 transition-colors duration-300"
+                  className="px-8 py-4 bg-gray-600 text-white font-bold rounded-full text-lg hover:bg-gray-700"
                 >
                   Retake
                 </button>
                 <button
                   onClick={handleAnalyzePhoto}
-                  className="px-8 py-4 bg-green-600 text-white font-bold rounded-full text-lg hover:bg-green-700 transition-colors duration-300"
+                  className="px-8 py-4 bg-green-600 text-white font-bold rounded-full text-lg hover:bg-green-700"
                 >
                   Continue with this image
                 </button>
@@ -436,21 +425,21 @@ export default function Home() {
               <ResultCard result={analysisResult} />
               <button
                 onClick={handleReset}
-                className="px-8 py-4 bg-orange-600 text-white font-bold rounded-full text-lg hover:bg-orange-700 transition-colors duration-300"
+                className="px-8 py-4 bg-orange-600 text-white font-bold rounded-full text-lg hover:bg-orange-700"
               >
                 Scan Another
               </button>
             </div>
           )}
           {showErrorView && (
-            <div className="flex flex-col items-center gap-4 animate-fade-in p-8 bg-red-900/50 backdrop-blur-md rounded-lg border border-red-500/50">
+            <div className="flex flex-col items-center gap-4 animate-fade-in p-8 bg-red-900/50 rounded-lg border border-red-500/50">
               <h2 className="text-2xl font-bold text-red-400">
                 Analysis Failed
               </h2>
               <p className="text-red-300">{error}</p>
               <button
                 onClick={handleReset}
-                className="mt-4 px-8 py-4 bg-orange-600 text-white font-bold rounded-full text-lg hover:bg-orange-700 transition-colors duration-300"
+                className="mt-4 px-8 py-4 bg-orange-600 text-white font-bold rounded-full text-lg hover:bg-orange-700"
               >
                 Try Again
               </button>
@@ -465,8 +454,6 @@ export default function Home() {
           />
           <canvas ref={canvasRef} className="hidden"></canvas>
         </div>
-
-        {/* --- Additional Page Sections --- */}
         <section
           id="locations"
           className="w-full bg-black/30 backdrop-blur-xl py-24 px-4"
@@ -481,6 +468,7 @@ export default function Home() {
                 <LocationCard key={location.name} {...location} />
               ))}
             </div>
+            {/* RESTORED: The "Explore More" button */}
             <div className="mt-16">
               <button
                 onClick={handleExploreMore}
@@ -499,7 +487,6 @@ export default function Home() {
             </div>
           </div>
         </section>
-
         <section
           id="features"
           className="w-full bg-black/40 backdrop-blur-2xl py-24 px-4"
@@ -525,7 +512,7 @@ export default function Home() {
               <FeatureCard
                 icon={<RefreshCw size={40} />}
                 title="AI-Powered Discovery"
-                description="Suggests new, unexplored locations for users to discover, powered by a generative language model."
+                description="Suggests new, unexplored locations for users to discover."
               />
               <FeatureCard
                 icon={<BellRing size={40} />}
@@ -543,7 +530,6 @@ export default function Home() {
                 description="Features a language-switching capability to make the application accessible to a wider audience."
               />
             </div>
-
             <h3 className="text-4xl font-bold text-white mb-12">
               Technology Stack
             </h3>
@@ -558,17 +544,13 @@ export default function Home() {
           </div>
         </section>
       </main>
-
       <Footer />
-
-      {/* --- Modals --- */}
       <Modal
         isOpen={isConnectModalOpen}
         onClose={() => setConnectModalOpen(false)}
         title="Connect With Us"
       >
         <form action="https://api.web3forms.com/submit" method="POST">
-          {/* Use the public environment variable for the form's access key. */}
           <input
             type="hidden"
             name="access_key"
@@ -598,7 +580,7 @@ export default function Home() {
             ></textarea>
             <button
               type="submit"
-              className="px-6 py-3 bg-orange-600 text-white font-bold rounded-full text-lg hover:bg-orange-700 transition-colors duration-300"
+              className="px-6 py-3 bg-orange-600 text-white font-bold rounded-full text-lg hover:bg-orange-700"
             >
               Send Message
             </button>
