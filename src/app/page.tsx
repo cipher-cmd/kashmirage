@@ -22,8 +22,21 @@ import {
   Upload,
 } from 'lucide-react';
 
-// --- Translation Content ---
-const translations: any = {
+// --- Translation Content Interfaces ---
+interface TranslationContent {
+  tagline: string;
+  locationsTitle: string;
+  featuresTitle: string;
+  featuresSubtitle: string;
+}
+
+interface Translations {
+  en: TranslationContent;
+  hi: TranslationContent;
+  ks: TranslationContent;
+}
+
+const translations: Translations = {
   en: {
     tagline: 'Scan. Discover. Learn.',
     locationsTitle: 'Explore Hidden Gems',
@@ -245,8 +258,8 @@ export default function Home() {
     const file = event.target.files?.[0];
     if (file) {
       const reader = new FileReader();
-      reader.onload = (e) => {
-        setCapturedImage(e.target?.result as string);
+      reader.onload = () => {
+        setCapturedImage(reader.result as string);
       };
       reader.readAsDataURL(file);
     }
@@ -303,9 +316,13 @@ export default function Home() {
         imageUrl: capturedImage,
       };
       setAnalysisResult(fullResult);
-    } catch (err: any) {
-      console.error(err);
-      setError(err.message);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        console.error(err);
+        setError(err.message);
+      } else {
+        setError('An unknown error occurred.');
+      }
     } finally {
       setIsLoading(false);
     }

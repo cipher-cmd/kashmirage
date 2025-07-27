@@ -45,8 +45,12 @@ export async function POST(request: Request) {
     } else {
       throw new Error('Image generation returned no data.');
     }
-  } catch (error: any) {
-    console.error('Error in generate-image route:', error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  } catch (err: unknown) {
+    let errorMessage = 'An unknown error occurred.';
+    if (err instanceof Error) {
+      errorMessage = err.message;
+    }
+    console.error('Error in route:', err);
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }

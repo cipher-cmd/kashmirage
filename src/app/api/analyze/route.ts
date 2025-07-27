@@ -75,8 +75,12 @@ export async function POST(request: Request) {
         2
       )}.`,
     });
-  } catch (error: any) {
-    console.error('Error in analyze route:', error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  } catch (err: unknown) {
+    let errorMessage = 'An unknown error occurred.';
+    if (err instanceof Error) {
+      errorMessage = err.message;
+    }
+    console.error('Error in route:', err);
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }
