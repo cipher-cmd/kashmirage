@@ -1,7 +1,10 @@
 // src/components/Modal.tsx
 
+'use client'; // Required for useEffect and useState
+
 import { X } from 'lucide-react';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 
 interface ModalProps {
   isOpen: boolean;
@@ -16,20 +19,29 @@ export default function Modal({
   title,
   children,
 }: ModalProps) {
-  if (!isOpen) return null;
+  const [isMounted, setIsMounted] = useState(false);
 
-  return (
-    // Backdrop
+  // This ensures the modal only renders on the client, where the DOM is available.
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isOpen || !isMounted) {
+    return null;
+  }
+
+  // createPortal renders the modal outside of the normal component hierarchy,
+  // directly into the document.body. This prevents parent styles from interfering.
+  return createPortal(
+    // Backdrop div that closes the modal on click
     <div
       className="fixed inset-0 bg-black/70 backdrop-blur-md z-[100] flex justify-center items-center"
       onClick={onClose}
     >
-      {/* Modal Panel */}
+      {/* Modal panel */}
       <div
         className="bg-gray-900 border border-white/20 rounded-lg shadow-2xl w-full max-w-lg m-4 p-6 relative"
         onClick={(e) => e.stopPropagation()}
-        // THIS INLINE STYLE WILL FORCE THE MODAL TO BE VISIBLE
-        style={{ opacity: 1 }}
       >
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-2xl font-bold text-orange-500">{title}</h2>
@@ -42,6 +54,7 @@ export default function Modal({
         </div>
         <div>{children}</div>
       </div>
-    </div>
+    </div>,
+    document.body // The modal will be attached here
   );
 }
