@@ -353,7 +353,7 @@ export default function Home() {
     <div className="bg-black/60 backdrop-blur-sm flex flex-col min-h-screen text-gray-200">
       <Header
         onConnectClick={() => setConnectModalOpen(true)}
-        onLanguageSelect={(lang) => setLanguage(lang)}
+        onLanguageSelect={(lang) => setLanguage(lang as keyof Translations)}
       />
       <main className="flex-grow">
         <div className="min-h-screen flex flex-col items-center justify-center text-center w-full pt-32 pb-12 px-4">
