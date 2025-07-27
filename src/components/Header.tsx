@@ -1,3 +1,5 @@
+// src/components/Header.tsx
+
 import { Globe, ChevronDown } from 'lucide-react';
 
 interface HeaderProps {
@@ -50,7 +52,8 @@ export default function Header({
             </a>
             <button
               onClick={onConnectClick}
-              className="px-6 py-3 bg-orange-600 text-white font-bold rounded-full text-lg hover:bg-orange-700 transition-all duration-300 transform hover:scale-105"
+              // Added 'relative' and 'z-10' to ensure the button is clickable
+              className="relative z-10 px-6 py-3 bg-orange-600 text-white font-bold rounded-full text-lg hover:bg-orange-700 transition-all duration-300 transform hover:scale-105"
             >
               Connect
             </button>

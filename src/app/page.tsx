@@ -144,9 +144,9 @@ export default function Home() {
   const [isConnectModalOpen, setConnectModalOpen] = useState(false);
   const [locations, setLocations] = useState<Location[]>(initialLocations);
   const [isExploring, setIsExploring] = useState(false);
-  const [language, setLanguage] = useState('en');
+  const [language, setLanguage] = useState<keyof Translations>('en');
 
-  const t = translations[language];
+  const t = translations[language as keyof Translations];
 
   // --- Refs ---
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -348,7 +348,10 @@ export default function Home() {
   return (
     <div className="bg-black/60 backdrop-blur-sm flex flex-col min-h-screen text-gray-200">
       <Header
-        onConnectClick={() => setConnectModalOpen(true)}
+        onConnectClick={() => {
+          console.log('Connect button was clicked!');
+          setConnectModalOpen(true);
+        }}
         onLanguageSelect={setLanguage}
       />
 

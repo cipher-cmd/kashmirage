@@ -1,4 +1,7 @@
+// src/components/Modal.tsx
+
 import { X } from 'lucide-react';
+import React from 'react';
 
 interface ModalProps {
   isOpen: boolean;
@@ -16,13 +19,17 @@ export default function Modal({
   if (!isOpen) return null;
 
   return (
+    // Backdrop
     <div
       className="fixed inset-0 bg-black/70 backdrop-blur-md z-[100] flex justify-center items-center"
       onClick={onClose}
     >
+      {/* Modal Panel */}
       <div
-        className="bg-gray-900/80 border border-white/20 rounded-lg shadow-2xl w-full max-w-lg m-4 p-6 relative animate-fade-in"
-        onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside the modal
+        className="bg-gray-900 border border-white/20 rounded-lg shadow-2xl w-full max-w-lg m-4 p-6 relative"
+        onClick={(e) => e.stopPropagation()}
+        // THIS INLINE STYLE WILL FORCE THE MODAL TO BE VISIBLE
+        style={{ opacity: 1 }}
       >
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-2xl font-bold text-orange-500">{title}</h2>
