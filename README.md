@@ -1,36 +1,25 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+        About the Project
 
-## Getting Started
+KashMirage is a smart website that recognizes famous places in Kashmir just from a picture. It helps people easily discover and learn about these beautiful locations.
 
-First, run the development server:
+        Main Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Recognize Places from Photos: You can upload a picture or use your phone's camera. The website uses artificial intelligence to figure out the name of the place in your photo.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+AI Creates Images: The website uses AI to create new and beautiful pictures for different locations, making the site look interesting.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Discover New Locations: An "Explore More" button uses AI to suggest new places in Kashmir, helping you find spots you may have never heard of.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Works on All Devices: The website is designed to work perfectly on phones, tablets, and computers. It has smooth animations and effects.
 
-## Learn More
+Safe and Secure: Secret keys for the AI tools are kept hidden on the server, so they are always protected.
 
-To learn more about Next.js, take a look at the following resources:
+Multiple Languages: The website can be viewed in three languages: English, Hindi, and Kashmiri.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+        Technologies Used
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Framework: Next.js
+Language: TypeScript
+Styling: Tailwind CSS
+Artificial Intelligence: Google AI, Stability AI
+Website Hosting: Vercel
