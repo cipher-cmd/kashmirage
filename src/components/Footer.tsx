@@ -1,41 +1,37 @@
+// src/components/Footer.tsx
+
 import { Linkedin, Github } from 'lucide-react';
-import { VscVercel } from 'react-icons/vsc';
+import { VscGithubInverted } from 'react-icons/vsc'; // Corrected Icon Import
 
 export default function Footer() {
   return (
     <footer
       id="footer"
-      className="w-full bg-black/40 backdrop-blur-2xl py-12 px-4"
+      className="w-full bg-black/40 backdrop-blur-2xl py-8 px-4 text-center text-gray-400"
     >
-      <div className="container mx-auto text-center text-gray-300">
-        <h3 className="text-2xl font-bold text-white mb-4">
-          Created by{' '}
-          <span className="text-orange-500">Syed Furqaan Andrabi</span>
-        </h3>
-        <p className="mb-6">Connect with me on social media:</p>
-        <div className="flex justify-center items-center gap-8 mb-8">
+      <div className="container mx-auto">
+        <div className="flex justify-center items-center gap-6 mb-4">
           <a
-            href="https://www.linkedin.com/in/sfurqan6"
+            href="https://www.linkedin.com/in/your-linkedin"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-gray-400 hover:text-orange-500 transition-colors duration-300"
+            className="hover:text-orange-500 transition-colors"
           >
-            <Linkedin size={32} />
+            <Linkedin size={28} />
           </a>
           <a
             href="https://github.com/cipher-cmd"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-gray-400 hover:text-orange-500 transition-colors duration-300"
+            className="hover:text-orange-500 transition-colors"
           >
-            <Github size={32} />
+            <Github size={28} />
           </a>
         </div>
-        <div className="border-t border-white/10 pt-6">
-          <p className="text-gray-500">
-            &copy; {new Date().getFullYear()} KashMirage. All rights reserved.
-          </p>
-        </div>
+        <p>Developed and designed by Furqan</p>
+        <p>
+          &copy; {new Date().getFullYear()} KashMirage. All Rights Reserved.
+        </p>
       </div>
     </footer>
   );
